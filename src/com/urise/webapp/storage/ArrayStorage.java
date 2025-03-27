@@ -17,8 +17,18 @@ public class ArrayStorage {
         resumeQuantity = 0;
     }
 
-    public void update(String uuid) {
-        
+    public void update(Resume r) {
+        boolean isExist = false;
+        for (int i = 0; i < resumeQuantity; i++) {
+            if (r.getUuid().equals(storage[i].getUuid())) {
+                System.out.println("Resume updated");
+                isExist = true;
+                break;
+            }
+        }
+        if (!isExist){
+            System.out.println("ERROR: " + r.getUuid() + " doesn't exist." );
+        }
     }
 
     public void save(Resume r) {
@@ -26,7 +36,6 @@ public class ArrayStorage {
             if (r.getUuid().equals(storage[i].getUuid())) {
                 System.out.println("ERROR: " + r.getUuid() + " already exist.");
                 delete(r.getUuid());
-                break;
             }
         }
         if (resumeQuantity < storage.length) {
@@ -53,19 +62,19 @@ public class ArrayStorage {
     }
 
     public void delete(String uuid) {
+        boolean isFound = false;
         for (int i = 0; i < resumeQuantity; i++) {
             if (uuid.equals(storage[i].getUuid())) {
                 storage[i] = storage[resumeQuantity - 1];
                 storage[resumeQuantity - 1] = null;
                 resumeQuantity--;
-                break;
-            }
-            if (!uuid.equals(storage[i].getUuid())) {
-                System.out.println("ERROR: " + uuid + " doesn't exist");
+                isFound = true;
                 break;
             }
         }
-
+        if (!isFound) {
+            System.out.println("ERROR: " + uuid + " doesn't exist.");
+        }
     }
 
     /**
@@ -78,5 +87,6 @@ public class ArrayStorage {
     public int size() {
         return resumeQuantity;
     }
+
 }
 
