@@ -3,6 +3,7 @@ package com.urise.webapp.storage;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
+import java.util.Scanner;
 
 
 /**
@@ -19,7 +20,15 @@ public class ArrayStorage {
     }
 
     public void update(Resume r) {
-        if (findIndex(r.getUuid()) != -1) {
+        Scanner rNew = new Scanner(System.in);
+        Resume resume = new Resume();
+        String resumeStr = null;
+        int updateIndex = findIndex(r.getUuid());
+        if (updateIndex != -1) {
+            System.out.print("Enter new resume: ");
+            resumeStr = rNew.nextLine();
+            resume.setUuid(resumeStr);
+            storage[updateIndex] = resume;
             System.out.println("Resume updated");
         } else {
             System.out.println("ERROR: " + r.getUuid() + " doesn't exist.");
@@ -27,42 +36,36 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        findIndex(r.getUuid());
-        if (findIndex(r.getUuid()) == -1) {
-            if (resumeQuantity < storage.length) {
-                storage[resumeQuantity] = r;
-                resumeQuantity++;
-            } else if (resumeQuantity > storage.length) {
-                System.out.println("ERROR: Storage is full.");
-            }
-        } else {
-            System.out.println("ERROR: " + r.getUuid() + " already exist");
+        int saveIndex = findIndex(r.getUuid());
+        if (resumeQuantity > STORAGE_LIMIT) {
+            System.out.println("ERROR: Cannot save " + r.getUuid() + " because storage is full.");
+        } else if (saveIndex != -1) {
+            System.out.println("ERROR: " + r.getUuid() + " already exist.");
+        }else {
+            storage[resumeQuantity] = r;
+            resumeQuantity++;
         }
     }
 
     public Resume get(String uuid) {
-        for (Resume resume : storage) {
-            if (findIndex(uuid) != -1) {
-                return resume;
-            }
-        }
-        if (findIndex(uuid) == -1) {
+        if (findIndex(uuid) != -1) {
+            System.out.println(uuid);
+        } else {
             System.out.println("ERROR: " + uuid + " doesn't exist.");
         }
         return null;
     }
 
     public void delete(String uuid) {
-        for (int i = 0; i < resumeQuantity; i++) {
-            if (findIndex(uuid) == i) {
-                storage[i] = storage[resumeQuantity - 1];
-                storage[resumeQuantity - 1] = null;
-                resumeQuantity--;
-                break;
-            } else if (findIndex(uuid) == -1) {
-                System.out.println("ERROR: " + uuid + " doesn't exist.");
-            }
+        int delIndex = findIndex(uuid);
+        if (delIndex != -1) {
+            storage[delIndex] = storage[resumeQuantity - 1];
+            storage[resumeQuantity - 1] = null;
+            resumeQuantity--;
+        } else {
+            System.out.println("ERROR: " + uuid + " doesn't exist.");
         }
+
     }
 
     /**
