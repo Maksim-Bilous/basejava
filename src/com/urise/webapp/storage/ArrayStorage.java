@@ -3,7 +3,6 @@ package com.urise.webapp.storage;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
-import java.util.Scanner;
 
 
 /**
@@ -20,17 +19,12 @@ public class ArrayStorage {
     }
 
     public void update(Resume r) {
-        Scanner rNew = new Scanner(System.in);
-        Resume resume = new Resume();
-        String resumeStr = null;
-        int updateIndex = findIndex(r.getUuid());
-        if (updateIndex != -1) {
-            System.out.print("Enter new resume: ");
-            resumeStr = rNew.nextLine();
-            resume.setUuid(resumeStr);
-            storage[updateIndex] = resume;
+        int index = findIndex(r.getUuid());
+        if (index != -1) {
+            storage[index] = null;
+            storage[index] = r;
             System.out.println("Resume updated");
-        } else {
+        }else {
             System.out.println("ERROR: " + r.getUuid() + " doesn't exist.");
         }
     }
@@ -41,7 +35,7 @@ public class ArrayStorage {
             System.out.println("ERROR: Cannot save " + r.getUuid() + " because storage is full.");
         } else if (saveIndex != -1) {
             System.out.println("ERROR: " + r.getUuid() + " already exist.");
-        }else {
+        } else {
             storage[resumeQuantity] = r;
             resumeQuantity++;
         }
@@ -57,9 +51,9 @@ public class ArrayStorage {
     }
 
     public void delete(String uuid) {
-        int delIndex = findIndex(uuid);
-        if (delIndex != -1) {
-            storage[delIndex] = storage[resumeQuantity - 1];
+        int index = findIndex(uuid);
+        if (index != -1) {
+            storage[index] = storage[resumeQuantity - 1];
             storage[resumeQuantity - 1] = null;
             resumeQuantity--;
         } else {
