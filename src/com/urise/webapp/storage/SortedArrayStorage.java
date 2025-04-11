@@ -9,7 +9,6 @@ import java.util.Arrays;
  */
 public class SortedArrayStorage extends AbstractArrayStorage{
 
-
     @Override
     public void clear() {
 
@@ -17,11 +16,22 @@ public class SortedArrayStorage extends AbstractArrayStorage{
 
     @Override
     public void update(Resume r) {
+
     }
 
     @Override
     public void save(Resume r) {
+        if (findIndex(r.getUuid()) == -1){
+            super.save(r);
+        } else {
+            System.out.println("ERROR: " + r.getUuid() + " already exist.");
+        }
 
+    }
+
+    @Override
+    public Resume get(String uuid) {
+        return null;
     }
 
     @Override
@@ -31,12 +41,12 @@ public class SortedArrayStorage extends AbstractArrayStorage{
 
     @Override
     public Resume[] getAll() {
-        return new Resume[resumeQuantity];
+        return super.getAll();
     }
 
     @Override
     public int size() {
-        return 0;
+        return resumeQuantity;
     }
 
     @Override
