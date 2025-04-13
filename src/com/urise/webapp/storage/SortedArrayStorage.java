@@ -10,11 +10,14 @@ import java.util.Arrays;
 public class SortedArrayStorage extends AbstractArrayStorage{
 
     @Override
-    public void delete(String uuid) {
-
+    public void remove(String uuid, int index) {
+        int remPos = resumeQuantity - index - 1;
+        if(remPos > 0) {
+            System.arraycopy(storage, index + 1, storage, index, remPos);
+        }
     }
 
-
+    @Override
     public void insert(Resume r, int index) {
         if (index < 0) {
             int insertPos = -index - 1;
