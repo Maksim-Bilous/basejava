@@ -10,43 +10,18 @@ import java.util.Arrays;
 public class SortedArrayStorage extends AbstractArrayStorage{
 
     @Override
-    public void clear() {
-
-    }
-
-    @Override
-    public void update(Resume r) {
-
-    }
-
-    @Override
-    public void save(Resume r) {
-        if (findIndex(r.getUuid()) == -1){
-            super.save(r);
-        } else {
-            System.out.println("ERROR: " + r.getUuid() + " already exist.");
-        }
-
-    }
-
-    @Override
-    public Resume get(String uuid) {
-        return null;
-    }
-
-    @Override
     public void delete(String uuid) {
 
     }
 
-    @Override
-    public Resume[] getAll() {
-        return super.getAll();
-    }
 
-    @Override
-    public int size() {
-        return resumeQuantity;
+    public void insert(Resume r, int index) {
+        if (index < 0) {
+            int insertPos = -index - 1;
+            System.arraycopy(storage, insertPos, storage, insertPos + 1, resumeQuantity - insertPos);
+            storage[insertPos] = r;
+            resumeQuantity++;
+        }
     }
 
     @Override
