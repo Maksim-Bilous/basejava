@@ -7,13 +7,13 @@ import java.util.Arrays;
 /**
  * Array based com.urise.webapp.storage for Resumes
  */
-public class SortedArrayStorage extends AbstractArrayStorage{
+public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     public void remove(String uuid, int index) {
         int remPos = resumeQuantity - index - 1;
-            System.arraycopy(storage, index + 1, storage, index, remPos);
-            resumeQuantity --;
+        System.arraycopy(storage, index + 1, storage, index, remPos);
+        resumeQuantity--;
     }
 
     @Override

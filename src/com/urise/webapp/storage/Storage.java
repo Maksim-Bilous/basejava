@@ -17,7 +17,7 @@ public interface Storage {
 
     int size();
 
-    void insert(Resume r , int index);
+    void insert(Resume r, int index);
 
-    void remove(String uuid , int index);
+    void remove(String uuid, int index);
 }

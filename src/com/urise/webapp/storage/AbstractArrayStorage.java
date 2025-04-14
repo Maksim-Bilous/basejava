@@ -8,7 +8,7 @@ import java.util.Arrays;
 /**
  * Array based com.urise.webapp.storage for Resumes
  */
-public abstract class AbstractArrayStorage implements Storage{
+public abstract class AbstractArrayStorage implements Storage {
     protected final int STORAGE_LIMIT = 10000;
 
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -24,7 +24,7 @@ public abstract class AbstractArrayStorage implements Storage{
         if (index != -1) {
             storage[index] = r;
             System.out.println("Resume updated");
-        }else {
+        } else {
             System.out.println("ERROR: " + r.getUuid() + " doesn't exist.");
         }
     }
@@ -50,6 +50,7 @@ public abstract class AbstractArrayStorage implements Storage{
         }
 
     }
+
     public void delete(String uuid) {
         int index = findIndex(uuid);
         if (index != -1) {
