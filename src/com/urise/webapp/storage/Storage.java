@@ -16,4 +16,8 @@ public interface Storage {
     Resume[] getAll();
 
     int size();
+
+    void insert(Resume r , int index);
+
+    void remove(String uuid , int index);
 }

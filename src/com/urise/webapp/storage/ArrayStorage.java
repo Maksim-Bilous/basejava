@@ -42,6 +42,16 @@ public class ArrayStorage extends AbstractArrayStorage {
         return super.size();
     }
 
+    @Override
+    public void remove(String uuid, int index) {
+
+    }
+
+    @Override
+    public void insert(Resume r, int index) {
+
+    }
+
     protected int findIndex(String uuid) {
         for (int i = 0; i < resumeQuantity; i++) {
             if (uuid.equals(storage[i].getUuid())) {
