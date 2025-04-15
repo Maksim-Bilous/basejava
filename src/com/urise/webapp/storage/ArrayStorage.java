@@ -7,10 +7,6 @@ import com.urise.webapp.model.Resume;
  */
 public class ArrayStorage extends AbstractArrayStorage {
 
-    @Override
-    public void clear() {
-        super.clear();
-    }
 
     @Override
     public void update(Resume r) {
@@ -31,17 +27,6 @@ public class ArrayStorage extends AbstractArrayStorage {
     public void delete(String uuid) {
         super.delete(uuid);
     }
-
-    @Override
-    public Resume[] getAll() {
-        return super.getAll();
-    }
-
-    @Override
-    public int size() {
-        return super.size();
-    }
-
     @Override
     public void remove(String uuid, int index) {
 
