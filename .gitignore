@@ -1,8 +1,9 @@
 .idea
 out
-README.md
+README
 *.iml
 log
+md
 
 
 
