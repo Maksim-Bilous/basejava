@@ -13,17 +13,17 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     @Override
     public void remove(String uuid, int index) {
         int remPos = resumeQuantity - index - 1;
-        System.arraycopy(storage, index + 1, storage, index, remPos);
-        resumeQuantity--;
+        if (remPos > 0) {
+            System.arraycopy(storage, index + 1, storage, index, remPos);
+        }
+
     }
 
     @Override
     public void insert(Resume r, int index) {
-        index = findIndex(r.getUuid());
         int insertPos = -index - 1;
-        System.arraycopy(storage, insertPos, storage, insertPos + 1, resumeQuantity - insertPos);
+        System.arraycopy(storage, insertPos, storage, insertPos + 1 , resumeQuantity - insertPos);
         storage[insertPos] = r;
-        resumeQuantity++;
     }
 
     @Override

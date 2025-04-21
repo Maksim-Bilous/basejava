@@ -9,7 +9,7 @@ import java.util.Arrays;
  * Array based com.urise.webapp.storage for Resumes
  */
 public abstract class AbstractArrayStorage implements Storage {
-    protected final int STORAGE_LIMIT = 10000;
+    static protected final int STORAGE_LIMIT = 10000;
 
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int resumeQuantity = 0;
@@ -45,7 +45,7 @@ public abstract class AbstractArrayStorage implements Storage {
         } else if (index != -1) {
             System.out.println("ERROR: " + r.getUuid() + " already exist.");
         } else {
-            storage[resumeQuantity] = r;
+            insert(r, index);
             resumeQuantity++;
         }
 
@@ -54,7 +54,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public void delete(String uuid) {
         int index = findIndex(uuid);
         if (index != -1) {
-            storage[index] = storage[resumeQuantity - 1];
+            remove(uuid, index);
             storage[resumeQuantity - 1] = null;
             resumeQuantity--;
         } else {
