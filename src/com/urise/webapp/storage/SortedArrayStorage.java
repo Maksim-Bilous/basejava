@@ -5,16 +5,18 @@ import com.urise.webapp.model.Resume;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import static java.lang.System.arraycopy;
+
 /**
  * Array based com.urise.webapp.storage for Resumes
  */
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
-    public void remove(String uuid, int index) {
+    public void remove(int index) {
         int remPos = resumeQuantity - index - 1;
         if (remPos > 0) {
-            System.arraycopy(storage, index + 1, storage, index, remPos);
+            arraycopy(storage, index + 1, storage, index, remPos);
         }
 
     }
@@ -28,8 +30,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     public int findIndex(String uuid) {
-        Resume searchKey = new Resume();
-        searchKey.setUuid(uuid);
+        Resume searchKey = new Resume(uuid);
         return Arrays.binarySearch(storage, 0, resumeQuantity, searchKey, Comparator.comparing(Resume::getUuid));
     }
 }

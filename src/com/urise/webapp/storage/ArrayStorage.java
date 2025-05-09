@@ -8,7 +8,7 @@ import com.urise.webapp.model.Resume;
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    public void remove(String uuid, int index) {
+    public void remove(int index) {
         storage[index] = storage[resumeQuantity - 1];
     }
 
