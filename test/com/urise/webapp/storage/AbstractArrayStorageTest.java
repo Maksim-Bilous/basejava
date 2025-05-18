@@ -13,7 +13,6 @@ import org.junit.Test;
 public abstract class AbstractArrayStorageTest {
     private final Storage storage;
     protected static final Resume[] emptyStorage = new Resume[0];
-    protected static final Resume[] expected = new Resume[3];
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
@@ -47,7 +46,6 @@ public abstract class AbstractArrayStorageTest {
     @Test
     public void clear() throws Exception {
         storage.clear();
-        Assert.assertEquals(0, storage.size());
         assertSize(0);
         Assert.assertArrayEquals(emptyStorage, storage.getAll());
 
@@ -77,16 +75,14 @@ public abstract class AbstractArrayStorageTest {
     @Test(expected = NotExistStorageException.class)
     public void delete() throws Exception {
         storage.delete(UUID_2);
-        storage.get(UUID_2);
         assertSize(2);
+        storage.get(UUID_2);
 
     }
 
     @Test
     public void getAll() throws Exception {
-        expected[0] = r1;
-        expected[1] = r2;
-        expected[2] = r3;
+        Resume[] expected = new Resume[]{r1,r2,r3};
         Assert.assertArrayEquals(expected, storage.getAll());
     }
 
@@ -100,22 +96,17 @@ public abstract class AbstractArrayStorageTest {
         storage.get("dummy");
     }
 
-    @Test
-    public void overFlowTest() {
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void saveFlowTest() {
         try {
             storage.clear();
             for (int i = 0; i < STORAGE_LIMIT; i++) {
                 storage.save(new Resume("uuid" + i));
-                if (storage.size() > STORAGE_LIMIT) {
-                    Assert.fail("StorageException выброшено раньше врeмени.");
-                }
             }
-            storage.save(new Resume("uuid10001"));
         } catch (StorageException e) {
-            System.out.println("Тест не пройден " + e.getMessage());
-        } catch (Exception e) {
-            System.out.println("Тест пройден " + e.getMessage());
+            Assert.fail("StorageException выброшено раньше врeмени.");
         }
+        storage.save(new Resume("uuid10001"));
     }
 
 
