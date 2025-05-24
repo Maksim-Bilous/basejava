@@ -28,6 +28,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         storage[insertPos] = r;
     }
 
+
     @Override
     public int findIndex(String uuid) {
         Resume searchKey = new Resume(uuid);
