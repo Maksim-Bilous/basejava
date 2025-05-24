@@ -54,7 +54,6 @@ public abstract class AbstractStorage implements Storage {
     @Override
     public void delete(String uuid) {
        int index = findIndex(uuid);
-       Resume r = new Resume(uuid);
        if (index < 0) {
            throw new NotExistStorageException(uuid);
        } else {
