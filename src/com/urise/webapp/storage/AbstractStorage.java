@@ -44,21 +44,14 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public Resume get(String uuid) {
-        int index = findIndex(uuid);
-        if (findIndex(uuid) < 0) {
-            throw new NotExistStorageException(uuid);
-        }
+        int index = checkExist(uuid);
         return storage.get(index);
     }
 
     @Override
     public void delete(String uuid) {
-       int index = findIndex(uuid);
-       if (index < 0) {
-           throw new NotExistStorageException(uuid);
-       } else {
-           remove(index);
-       }
+       int index = checkExist(uuid);
+       remove(index);
 
     }
 
@@ -77,4 +70,12 @@ public abstract class AbstractStorage implements Storage {
     public abstract void insert(Resume r, int index);
 
     protected abstract int findIndex(String uuid);
+
+    public int checkExist(String uuid) {
+        int index = findIndex(uuid);
+        if (findIndex(uuid) < 0) {
+            throw new NotExistStorageException(uuid);
+        }
+        return index;
+    }
 }

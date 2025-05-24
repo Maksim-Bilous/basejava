@@ -1,7 +1,6 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.ExistStorageException;
-import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
@@ -27,10 +26,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     public Resume get(String uuid) {
-        int index = findIndex(uuid);
-        if (findIndex(uuid) < 0) {
-            throw new NotExistStorageException(uuid);
-        }
+        int index = checkExist(uuid);
         return storage[index];
     }
 
@@ -48,14 +44,10 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     public void delete(String uuid) {
-        int index = findIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        } else {
+        int index = checkExist(uuid);
             remove(index);
             storage[resumeQuantity - 1] = null;
             resumeQuantity--;
-        }
     }
 
     /**
@@ -75,5 +67,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     public abstract void insert(Resume r, int index);
 
     protected abstract int findIndex(String uuid);
+
 }
 
