@@ -17,7 +17,4 @@ public interface Storage {
 
     int size();
 
-   /* void insert(Resume remove, int index);
-
-    void remove(int index);*/
 }
