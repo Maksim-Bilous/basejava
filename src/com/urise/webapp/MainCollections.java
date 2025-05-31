@@ -23,12 +23,12 @@ public class MainCollections {
         collection.add(RESUME_2);
         collection.add(RESUME_3);
 
-        for (Resume r : collection) {
-            System.out.println(r);
-            if (Objects.equals(r.getUuid(), UUID_1)) {
-                collection.remove(r);
-            }
-        }
+//        for (Resume r : collection) {
+//            System.out.println(r);
+//            if (Objects.equals(r.getUuid(), UUID_1)) {
+//                collection.remove(r);
+//            }
+//        }
 
         Iterator<Resume> iterator = collection.iterator();
         while (iterator.hasNext()) {
