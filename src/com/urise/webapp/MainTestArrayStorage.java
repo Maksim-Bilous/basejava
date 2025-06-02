@@ -4,10 +4,6 @@ import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.SortedArrayStorage;
 import com.urise.webapp.storage.Storage;
 
-
-/**
- * Test for your com.urise.webapp.storage.ArrayStorage implementation
- */
 public class MainTestArrayStorage {
     static final Storage ARRAY_STORAGE = new SortedArrayStorage();
 
@@ -26,6 +22,13 @@ public class MainTestArrayStorage {
         printAll();
         ARRAY_STORAGE.delete(r1.getUuid());
         printAll();
+        System.out.println("\nGet R2: " + ARRAY_STORAGE.get(r2.getUuid()));
+        System.out.println("Update R2:");
+        ARRAY_STORAGE.update(r2);
+        System.out.println("Get R2: " + ARRAY_STORAGE.get(r2.getUuid()));
+
+        System.out.println("Size: " + ARRAY_STORAGE.size());
+
         ARRAY_STORAGE.clear();
         printAll();
 

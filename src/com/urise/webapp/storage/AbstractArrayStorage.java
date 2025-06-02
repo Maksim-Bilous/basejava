@@ -19,21 +19,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         Arrays.fill(storage, 0, resumeQuantity, null);
         resumeQuantity = 0;
     }
-    
-    @Override
-    protected Object getSearchKey(String uuid) {
-        for (int i = 0; i < resumeQuantity; i++) {
-            if (uuid.equals(storage[i].getUuid())) {
-                return i;
-            }
-        }
-        return -1;
-    }
 
-
-    /**
-     * @return array, contains only Resumes in com.urise.webapp.storage (without null)
-     */
     public Resume[] getAll() {
         return Arrays.copyOf(storage, resumeQuantity);
     }
@@ -41,9 +27,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     public int size() {
         return resumeQuantity;
     }
-
-
-    protected abstract int findIndex(String uuid);
 
 }
 

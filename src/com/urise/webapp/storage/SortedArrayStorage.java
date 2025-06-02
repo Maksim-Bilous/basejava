@@ -2,8 +2,6 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
-import java.util.Comparator;
-
 import static java.lang.System.arraycopy;
 import static java.util.Arrays.binarySearch;
 
@@ -40,22 +38,12 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         return storage[(Integer) searchKey];
     }
 
-    @Override
-    public int findIndex(String uuid) {
-        Resume searchKey = new Resume(uuid);
-        return binarySearch(storage, 0, resumeQuantity, searchKey, Comparator.comparing(Resume::getUuid));
-    }
 
     @Override
     public boolean isExisting(Object searchKey) {
-        return  searchKey != null && (Integer) searchKey >= 0;
+        return searchKey != null && (Integer) searchKey >= 0;
     }
 
-    @Override
-    public boolean isExist(Object searchKey) {
-
-        return false;
-    }
 
     @Override
     protected Object getSearchKey(String uuid) {

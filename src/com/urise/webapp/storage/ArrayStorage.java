@@ -29,19 +29,10 @@ public class ArrayStorage extends AbstractArrayStorage {
         return storage[(Integer) searchKey];
     }
 
-    protected int findIndex(String uuid) {
-        return 0;
-    }
 
     @Override
     public boolean isExisting(Object searchKey) {
         return searchKey != null && (Integer) searchKey >= 0;
-    }
-
-    @Override
-    public boolean isExist(Object searchKey) {
-
-        return false;
     }
 
     @Override

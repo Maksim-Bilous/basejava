@@ -11,7 +11,6 @@ public class MapStorageTest {
         Resume R1 = new Resume("UUID1");
         Resume R2 = new Resume("UUID2");
         Resume R3 = new Resume("UUID3");
-        Resume R4 = new Resume("UUID4");
 
         MAP_STORAGE.save(R1);
         MAP_STORAGE.save(R2);

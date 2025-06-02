@@ -24,7 +24,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume doGet (Object searchKey) {
+    protected Resume doGet(Object searchKey) {
         return storage.get((Integer) searchKey);
     }
 
@@ -32,12 +32,6 @@ public class ListStorage extends AbstractStorage {
     @Override
     public boolean isExisting(Object searchKey) {
         return (Integer) searchKey >= 0;
-    }
-
-    @Override
-    public boolean isExist(Object searchKey) {
-
-        return false;
     }
 
     @Override
