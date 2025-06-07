@@ -54,5 +54,10 @@ public class ArrayStorage extends AbstractArrayStorage {
         return -1;
     }
 
+    @Override
+    protected Object getSearchKeyName(String fullName) {
+        return fullName;
+    }
+
 }
 

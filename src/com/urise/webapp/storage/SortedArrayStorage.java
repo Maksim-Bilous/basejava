@@ -59,5 +59,10 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         Resume searchKey = new Resume(uuid);
         return binarySearch(storage, 0, resumeQuantity, searchKey);
     }
+
+    @Override
+    protected Object getSearchKeyName(String fullName) {
+        return null;
+    }
 }
 

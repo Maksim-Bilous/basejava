@@ -44,6 +44,11 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
+    protected Object getSearchKeyName(String fullName) {
+        return null;
+    }
+
+    @Override
     public int size() {
         return mapStorage.size();
     }

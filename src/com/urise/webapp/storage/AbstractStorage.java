@@ -10,26 +10,26 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public final void update(Resume r) {
-        Object searchKey = getNotExistSearchKey(r.getUuid());
+        Object searchKey = getNotExistSearchKey(r.getFullName());
         doUpdate(r, searchKey);
         System.out.println("Resume updated");
     }
 
     @Override
     public final void save(Resume r) {
-        Object searchKey = getExistSearchKey(r.getUuid());
+        Object searchKey = getExistSearchKey(r.getFullName());
         doSave(r, searchKey);
     }
 
     @Override
-    public final Resume get(String uuid) {
-        Object searchKey = getNotExistSearchKey(uuid);
+    public final Resume get(String fullName) {
+        Object searchKey = getNotExistSearchKey(fullName);
         return doGet(searchKey);
     }
 
     @Override
-    public final void delete(String uuid) {
-        Object searchKey = getNotExistSearchKey(uuid);
+    public final void delete(String fullName) {
+        Object searchKey = getNotExistSearchKey(fullName);
         doDelete(searchKey);
 
     }
@@ -48,18 +48,22 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Object getSearchKey(String uuid);
 
-    private Object getNotExistSearchKey(String uuid) {
-        Object searchKey = getSearchKey(uuid);
+    protected abstract Object getSearchKeyName(String fullName);
+
+
+
+    private Object getNotExistSearchKey(String fullName) {
+        Object searchKey = getSearchKeyName(fullName);
         if (!isExisting(searchKey)) {
-            throw new NotExistStorageException(uuid);
+            throw new NotExistStorageException(fullName);
         }
         return searchKey;
     }
 
-    private Object getExistSearchKey(String uuid) {
-        Object searchKey = getSearchKey(uuid);
+    private Object getExistSearchKey(String fullName) {
+        Object searchKey = getSearchKeyName(fullName);
         if (isExisting(searchKey)) {
-            throw new ExistStorageException(uuid);
+            throw new ExistStorageException(fullName);
         }
         return searchKey;
     }

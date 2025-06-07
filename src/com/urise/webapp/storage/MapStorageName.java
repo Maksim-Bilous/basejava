@@ -3,65 +3,61 @@ package com.urise.webapp.storage;
 import com.urise.webapp.model.Resume;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class ListStorage extends AbstractStorage {
-    private final List<Resume> storage = new ArrayList<>();
+public class MapStorageName extends AbstractStorage{
+    private final Map<Object, Resume> mapName = new HashMap<>();
+
 
     @Override
     public List<Resume> getAllSorted() {
-        return new ArrayList<>(storage);
+        return new ArrayList<>(mapName.values());
     }
 
     @Override
     protected void doSave(Resume r, Object searchKey) {
-        storage.add(r);
+        mapName.put(searchKey, r);
     }
 
     @Override
     protected void doDelete(Object searchKey) {
-        storage.remove(((Integer) searchKey).intValue());
+        mapName.remove(searchKey);
     }
 
     @Override
     protected void doUpdate(Resume r, Object searchKey) {
-        storage.set((Integer) searchKey, r);
+        mapName.put(searchKey, r);
     }
 
     @Override
     protected Resume doGet(Object searchKey) {
-        return storage.get((Integer) searchKey);
+        return mapName.get(searchKey);
     }
-
 
     @Override
     public boolean isExisting(Object searchKey) {
-        return (Integer) searchKey >= 0;
+        return mapName.containsKey(searchKey);
     }
 
     @Override
     protected Object getSearchKey(String uuid) {
-        for (int i = 0; i < size(); i++) {
-            if (storage.get(i).getUuid().equals(uuid)) {
-                return i;
-            }
-        }
-        return -1;
+        return uuid;
     }
 
     @Override
     protected Object getSearchKeyName(String fullName) {
-        return null;
+        return fullName;
     }
 
     @Override
     public int size() {
-        return storage.size();
+        return mapName.size();
     }
 
     @Override
     public void clear() {
-        storage.clear();
+        mapName.clear();
     }
-
 }
