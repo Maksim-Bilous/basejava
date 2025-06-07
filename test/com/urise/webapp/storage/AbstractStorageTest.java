@@ -1,7 +1,5 @@
 package com.urise.webapp.storage;
 
-import static com.urise.webapp.storage.AbstractArrayStorage.STORAGE_LIMIT;
-
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
@@ -9,8 +7,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.urise.webapp.storage.AbstractArrayStorage.STORAGE_LIMIT;
 
-public abstract class AbstractArrayStorageTest {
+
+public abstract class AbstractStorageTest {
     private final Storage storage;
     protected static final Resume[] emptyStorage = new Resume[0];
 
@@ -18,6 +18,7 @@ public abstract class AbstractArrayStorageTest {
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
+
     protected static final Resume r1;
     protected static final Resume r2;
     protected static final Resume r3;
@@ -30,7 +31,7 @@ public abstract class AbstractArrayStorageTest {
         r4 = new Resume(UUID_4);
     }
 
-    public AbstractArrayStorageTest(Storage storage) {
+    public AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
 
@@ -46,7 +47,7 @@ public abstract class AbstractArrayStorageTest {
     public void clear() throws Exception {
         storage.clear();
         assertSize(0);
-        Assert.assertArrayEquals(emptyStorage, storage.getAll());
+        Assert.assertArrayEquals(emptyStorage, storage.getAllSorted().toArray());
 
     }
 
@@ -82,7 +83,7 @@ public abstract class AbstractArrayStorageTest {
     @Test
     public void getAll() throws Exception {
         Resume[] expected = new Resume[]{r1, r2, r3};
-        Assert.assertArrayEquals(expected, storage.getAll());
+        Assert.assertArrayEquals(expected, storage.getAllSorted().toArray());
     }
 
     @Test
@@ -97,6 +98,7 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void saveFlowTest() {
+
         try {
             storage.clear();
             for (int i = 0; i < STORAGE_LIMIT; i++) {

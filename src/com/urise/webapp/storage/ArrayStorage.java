@@ -2,11 +2,20 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Array based com.urise.webapp.storage for Resumes
  */
 public class ArrayStorage extends AbstractArrayStorage {
 
+
+    @Override
+    public List<Resume> getAllSorted() {
+        return new ArrayList<>(Arrays.asList(Arrays.copyOf(storage, size())));
+    }
 
     @Override
     protected void doSave(Resume r, Object searchKey) {
@@ -44,5 +53,6 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
         return -1;
     }
+
 }
 

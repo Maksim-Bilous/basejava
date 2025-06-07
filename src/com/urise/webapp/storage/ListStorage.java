@@ -9,6 +9,11 @@ public class ListStorage extends AbstractStorage {
     private final List<Resume> storage = new ArrayList<>();
 
     @Override
+    public List<Resume> getAllSorted() {
+        return new ArrayList<>(storage);
+    }
+
+    @Override
     protected void doSave(Resume r, Object searchKey) {
         storage.add(r);
     }
@@ -42,11 +47,6 @@ public class ListStorage extends AbstractStorage {
             }
         }
         return -1;
-    }
-
-    @Override
-    public Resume[] getAll() {
-        return storage.toArray(new Resume[size()]);
     }
 
     @Override

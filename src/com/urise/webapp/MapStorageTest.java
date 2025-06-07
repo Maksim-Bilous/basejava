@@ -38,7 +38,7 @@ public class MapStorageTest {
 
     static void printAll() {
         System.out.println("\nGet All");
-        for (Resume r : MAP_STORAGE.getAll()) {
+        for (Resume r : MAP_STORAGE.getAllSorted()) {
             System.out.println(r);
         }
     }

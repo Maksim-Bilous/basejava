@@ -9,6 +9,11 @@ public class MapStorage extends AbstractStorage {
 
 
     @Override
+    public List<Resume> getAllSorted() {
+        return new ArrayList<>(mapStorage.values());
+    }
+
+    @Override
     protected void doSave(Resume r, Object searchKey) {
         mapStorage.put(searchKey, r);
     }
@@ -36,11 +41,6 @@ public class MapStorage extends AbstractStorage {
     @Override
     protected Object getSearchKey(String uuid) {
         return uuid;
-    }
-
-    @Override
-    public Resume[] getAll() {
-        return mapStorage.values().toArray(new Resume[size()]);
     }
 
     @Override

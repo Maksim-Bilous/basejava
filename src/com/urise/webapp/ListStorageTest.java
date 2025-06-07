@@ -40,7 +40,7 @@ public class ListStorageTest {
 
     static void printAll() {
         System.out.println("\nGet All");
-        for (Resume r : LIST_STORAGE.getAll()) {
+        for (Resume r : LIST_STORAGE.getAllSorted()) {
             System.out.println(r);
         }
     }

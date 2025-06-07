@@ -3,7 +3,7 @@ package com.urise.webapp.storage;
 import com.urise.webapp.model.Resume;
 import org.junit.Test;
 
-public class ArrayStorageTest extends AbstractArrayStorageTest {
+public class ArrayStorageTest extends AbstractStorageTest {
 
     public ArrayStorageTest() {
         super(new ArrayStorage());
