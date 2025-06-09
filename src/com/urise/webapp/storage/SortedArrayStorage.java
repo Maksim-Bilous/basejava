@@ -9,9 +9,6 @@ import java.util.List;
 import static java.lang.System.arraycopy;
 import static java.util.Arrays.binarySearch;
 
-/**
- * Array based com.urise.webapp.storage for Resumes
- */
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
@@ -21,9 +18,15 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void doSave(Resume r, Object searchKey) {
-        int insertIdx = -(Integer) searchKey - 1;
-       System.arraycopy(storage, insertIdx, storage, insertIdx + 1, resumeQuantity - insertIdx);
+        insert(r , (Integer) searchKey);
+    }
+
+
+    public void insert(Resume r, int index) {
+        int insertIdx = -index - 1;
+        System.arraycopy(storage, insertIdx, storage, insertIdx + 1, resumeQuantity - insertIdx);
         storage[insertIdx] = r;
+        resumeQuantity++;
     }
 
 
@@ -56,13 +59,14 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected Object getSearchKey(String uuid) {
-        Resume searchKey = new Resume(uuid);
+        Resume searchKey = new Resume(uuid, "");
         return binarySearch(storage, 0, resumeQuantity, searchKey);
     }
 
     @Override
     protected Object getSearchKeyName(String fullName) {
-        return null;
+        Resume searchName = new Resume("", fullName);
+        return binarySearch(storage, 0, resumeQuantity, searchName);
     }
 }
 

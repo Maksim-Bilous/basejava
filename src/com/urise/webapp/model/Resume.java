@@ -23,6 +23,14 @@ public class Resume implements Comparable<Resume> {
 
     }
 
+    public String getUuid() {
+        return uuid;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
     @Override
     public String toString() {
         return uuid;
@@ -43,17 +51,11 @@ public class Resume implements Comparable<Resume> {
         return uuid.hashCode();
     }
 
-
-    public String getUuid() {
-        return uuid;
-    }
-
     @Override
     public int compareTo(Resume o) {
         return uuid.compareTo(o.uuid);
+
+
     }
 
-    public String getFullName() {
-        return fullName;
-    }
 }
