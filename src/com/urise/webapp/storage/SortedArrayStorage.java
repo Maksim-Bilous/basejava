@@ -4,6 +4,7 @@ import com.urise.webapp.model.Resume;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import static java.lang.System.arraycopy;
@@ -13,7 +14,9 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     public List<Resume> getAllSorted() {
-        return new ArrayList<>(List.of(Arrays.copyOf(storage, size())));
+        List<Resume> storageSorted = new ArrayList<>(List.of(Arrays.copyOf(storage, resumeQuantity)));
+        storageSorted.sort(Comparator.comparing(Resume :: getUuid).thenComparing(Resume :: getFullName));
+        return storageSorted;
     }
 
     @Override
@@ -59,14 +62,8 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected Object getSearchKey(String uuid) {
-        Resume searchKey = new Resume(uuid, "");
+        Resume searchKey = new Resume("", uuid);
         return binarySearch(storage, 0, resumeQuantity, searchKey);
-    }
-
-    @Override
-    protected Object getSearchKeyName(String fullName) {
-        Resume searchName = new Resume("", fullName);
-        return binarySearch(storage, 0, resumeQuantity, searchName);
     }
 }
 

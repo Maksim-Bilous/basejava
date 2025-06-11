@@ -8,9 +8,9 @@ public class ListStorageTest {
     static final Storage LIST_STORAGE = new ListStorage();
 
     public static void main(String[] args) {
-        Resume R1 = new Resume("UUID1");
-        Resume R2 = new Resume("UUID2");
-        Resume R3 = new Resume("UUID3");
+        Resume R1 = new Resume("Maksim Bilous", "UUID1");
+        Resume R2 = new Resume("Violetta Bilous", "UUID2");
+        Resume R3 = new Resume("Maksim Bilous", "UUID3");
 
         LIST_STORAGE.save(R1);
         LIST_STORAGE.save(R2);

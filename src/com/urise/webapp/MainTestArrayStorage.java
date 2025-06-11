@@ -1,31 +1,31 @@
 package com.urise.webapp;
 
 import com.urise.webapp.model.Resume;
-import com.urise.webapp.storage.SortedArrayStorage;
+import com.urise.webapp.storage.ArrayStorage;
 import com.urise.webapp.storage.Storage;
 
 public class MainTestArrayStorage {
-    static final Storage ARRAY_STORAGE = new SortedArrayStorage();
+    static final Storage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) {
-        Resume r1 = new Resume("uuid1");
-        Resume r2 = new Resume("uuid2");
-        Resume r3 = new Resume("uuid3");
+        Resume R1 = new Resume("Maksim Bilous", "UUID1");
+        Resume R2 = new Resume("Violetta Bilous", "UUID2");
+        Resume R3 = new Resume("Maria Aleksevna", "UUID3");
 
-        ARRAY_STORAGE.save(r1);
-        ARRAY_STORAGE.save(r2);
-        ARRAY_STORAGE.save(r3);
+        ARRAY_STORAGE.save(R1);
+        ARRAY_STORAGE.save(R2);
+        ARRAY_STORAGE.save(R3);
 
-        System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
+        System.out.println("Get r1: " + ARRAY_STORAGE.get(R1.getUuid()));
         System.out.println("Size: " + ARRAY_STORAGE.size());
 
         printAll();
-        ARRAY_STORAGE.delete(r1.getUuid());
+        ARRAY_STORAGE.delete(R1.getUuid());
         printAll();
-        System.out.println("\nGet R2: " + ARRAY_STORAGE.get(r2.getUuid()));
+        System.out.println("\nGet R2: " + ARRAY_STORAGE.get(R2.getUuid()));
         System.out.println("Update R2:");
-        ARRAY_STORAGE.update(r2);
-        System.out.println("Get R2: " + ARRAY_STORAGE.get(r2.getUuid()));
+        ARRAY_STORAGE.update(R2);
+        System.out.println("Get R2: " + ARRAY_STORAGE.get(R2.getUuid()));
 
         System.out.println("Size: " + ARRAY_STORAGE.size());
 
