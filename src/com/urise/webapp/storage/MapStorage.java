@@ -10,7 +10,9 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     public List<Resume> getAllSorted() {
-        return new ArrayList<>(mapStorage.values());
+        List<Resume> storageSorted = new ArrayList<>(mapStorage.values());
+        storageSorted.sort(Comparator.comparing(Resume :: getUuid).thenComparing(Resume :: getFullName));
+        return storageSorted;
     }
 
     @Override
@@ -41,11 +43,6 @@ public class MapStorage extends AbstractStorage {
     @Override
     protected Object getSearchKey(String uuid) {
         return uuid;
-    }
-
-    @Override
-    protected Object getSearchKeyName(String fullName) {
-        return null;
     }
 
     @Override
