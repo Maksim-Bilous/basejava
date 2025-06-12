@@ -4,40 +4,38 @@ import com.urise.webapp.model.Resume;
 
 import java.util.*;
 
-public class MapStorageName extends AbstractStorage{
-    private final Map<Object, Resume> mapName = new HashMap<>();
+public class MapStorageName extends AbstractStorage {
+    private final Map<String, Resume> mapName = new HashMap<>();
 
 
     @Override
-    public List<Resume> getAllSorted() {
-        List<Resume> storageSorted = new ArrayList<>(mapName.values());
-        storageSorted.sort(Comparator.comparing(Resume :: getUuid).thenComparing(Resume :: getFullName));
-        return storageSorted;
+    protected List<Resume> getALL() {
+        return new ArrayList<>(mapName.values());
     }
 
     @Override
     protected void doSave(Resume r, Object searchKey) {
-        mapName.put(searchKey, r);
+        mapName.put(r.getUuid(), r);
     }
 
     @Override
     protected void doDelete(Object searchKey) {
-        mapName.remove(searchKey);
+        mapName.remove((String) searchKey);
     }
 
     @Override
     protected void doUpdate(Resume r, Object searchKey) {
-        mapName.put(searchKey, r);
+        mapName.replace(r.getUuid(), r);
     }
 
     @Override
     protected Resume doGet(Object searchKey) {
-        return mapName.get(searchKey);
+        return mapName.get((String) searchKey);
     }
 
     @Override
     public boolean isExisting(Object searchKey) {
-        return mapName.containsKey(searchKey);
+        return searchKey != null && mapName.containsKey((String) searchKey);
     }
 
     @Override

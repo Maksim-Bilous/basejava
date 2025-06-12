@@ -3,19 +3,17 @@ package com.urise.webapp.storage;
 import com.urise.webapp.model.Resume;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
+
 /**
  * Array based com.urise.webapp.storage for Resumes
  */
 public class ArrayStorage extends AbstractArrayStorage {
 
+
     @Override
-    public List<Resume> getAllSorted() {
-        List<Resume> storageSorted = new ArrayList<>(List.of(Arrays.copyOf(storage, resumeQuantity)));
-        storageSorted.sort(Comparator.comparing(Resume :: getUuid).thenComparing(Resume :: getFullName));
-        return storageSorted;
+    protected List<Resume> getALL() {
+        return new ArrayList<>(List.of(storage));
     }
 
     @Override

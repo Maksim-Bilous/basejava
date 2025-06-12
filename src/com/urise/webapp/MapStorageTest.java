@@ -1,16 +1,16 @@
 package com.urise.webapp;
 
 import com.urise.webapp.model.Resume;
-import com.urise.webapp.storage.MapStorage;
+import com.urise.webapp.storage.MapStorageName;
 import com.urise.webapp.storage.Storage;
 
 public class MapStorageTest {
-    static final Storage MAP_STORAGE = new MapStorage();
+    static final Storage MAP_STORAGE = new MapStorageName();
 
     public static void main(String[] args) {
-        Resume R1 = new Resume("Maksim Bilous", "UUID1");
-        Resume R2 = new Resume("Violetta Bilous", "UUID2");
-        Resume R3 = new Resume("Maria Aleksevna", "UUID3");
+        Resume R1 = new Resume("Violetta Bilous");
+        Resume R2 = new Resume("Maksim Bilous");
+        Resume R3 = new Resume("Violetta Bilous");
 
         MAP_STORAGE.save(R1);
         MAP_STORAGE.save(R2);

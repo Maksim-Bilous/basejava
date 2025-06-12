@@ -8,11 +8,10 @@ public class MapStorage extends AbstractStorage {
     private final Map<Object, Resume> mapStorage = new HashMap<>();
 
 
+
     @Override
-    public List<Resume> getAllSorted() {
-        List<Resume> storageSorted = new ArrayList<>(mapStorage.values());
-        storageSorted.sort(Comparator.comparing(Resume :: getUuid).thenComparing(Resume :: getFullName));
-        return storageSorted;
+    protected List<Resume> getALL() {
+        return new ArrayList<>(mapStorage.values());
     }
 
     @Override
