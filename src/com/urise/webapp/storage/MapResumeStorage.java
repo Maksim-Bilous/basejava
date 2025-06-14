@@ -4,7 +4,7 @@ import com.urise.webapp.model.Resume;
 
 import java.util.*;
 
-public class MapStorageName extends AbstractStorage {
+public class MapResumeStorage extends AbstractStorage {
     private final Map<String, Resume> mapName = new HashMap<>();
 
 
@@ -15,7 +15,7 @@ public class MapStorageName extends AbstractStorage {
 
     @Override
     protected void doSave(Resume r, Object searchKey) {
-        mapName.put(r.getUuid(), r);
+        mapName.put((String) searchKey, r);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class MapStorageName extends AbstractStorage {
 
     @Override
     protected void doUpdate(Resume r, Object searchKey) {
-        mapName.replace(r.getUuid(), r);
+        mapName.replace((String) searchKey, r);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class MapStorageName extends AbstractStorage {
 
     @Override
     public boolean isExisting(Object searchKey) {
-        return searchKey != null && mapName.containsKey((String) searchKey);
+        return mapName.get((String) searchKey) != null;
     }
 
     @Override
