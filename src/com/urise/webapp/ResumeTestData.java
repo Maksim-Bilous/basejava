@@ -1,9 +1,6 @@
 package com.urise.webapp;
 
-import com.urise.webapp.model.ListSection;
-import com.urise.webapp.model.Resume;
-import com.urise.webapp.model.SectionType;
-import com.urise.webapp.model.TextSection;
+import com.urise.webapp.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +9,8 @@ public class ResumeTestData {
 
     public static void main(String[] args) {
         Resume resume1 = new Resume("Grigory Kislin");
+
+        List<Period> periods = new ArrayList<>();
 
 
         List<String> achievements = new ArrayList<>();
@@ -33,11 +32,14 @@ public class ResumeTestData {
         System.out.println(SectionType.PERSONAL.getTitle() + "\n" + resume1.getSection(SectionType.PERSONAL) + "\n");
 
 
+
         System.out.println(SectionType.ACHIEVEMENT.getTitle());
         System.out.println(resume1.getSection(SectionType.ACHIEVEMENT) + "\n");
 
         System.out.println(SectionType.QUALIFICATIONS.getTitle());
         System.out.println(resume1.getSection(SectionType.QUALIFICATIONS)  + "\n");
+
+        System.out.println(SectionType.EXPERIENCE.getTitle());
 
 
     }
