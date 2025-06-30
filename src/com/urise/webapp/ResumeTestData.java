@@ -2,6 +2,7 @@ package com.urise.webapp;
 
 import com.urise.webapp.model.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,9 @@ public class ResumeTestData {
     public static void main(String[] args) {
         Resume resume1 = new Resume("Grigory Kislin");
 
-        List<Period> periods = new ArrayList<>();
+        List<LocalDate> periods1 = new ArrayList<>();
+        periods1.add(LocalDate.of(2020, 12, 12));
+        periods1.add(LocalDate.of(2025, 2, 2));
 
 
         List<String> achievements = new ArrayList<>();
@@ -28,8 +31,11 @@ public class ResumeTestData {
         resume1.setSections(SectionType.ACHIEVEMENT, new ListSection(achievements));
         resume1.setSections(SectionType.QUALIFICATIONS, new ListSection(qualifications));
 
+        resume1.setSections(SectionType.EXPERIENCE, new Organization(periods1, "Java Online Projects", "https://javaops.ru/"));
+
         System.out.println(SectionType.OBJECTIVE.getTitle() + "\n" + resume1.getSection(SectionType.OBJECTIVE) + "\n");
         System.out.println(SectionType.PERSONAL.getTitle() + "\n" + resume1.getSection(SectionType.PERSONAL) + "\n");
+
 
 
 
@@ -40,6 +46,7 @@ public class ResumeTestData {
         System.out.println(resume1.getSection(SectionType.QUALIFICATIONS)  + "\n");
 
         System.out.println(SectionType.EXPERIENCE.getTitle());
+        System.out.println(resume1.getSection(SectionType.EXPERIENCE));
 
 
     }

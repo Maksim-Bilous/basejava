@@ -1,19 +1,15 @@
 package com.urise.webapp.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
-public class Organization {
-    private final List<Period> periods;
-    private String homePage;
-    private String orgName;
+public class Organization extends Section {
+    private final List<LocalDate> periods;
+    private final String homePage;
+    private final String orgName;
 
 
-
-    public Organization(List<Period> periods) {
-        this.periods = periods;
-    }
-
-    public Organization(List<Period> periods, String orgName , String homePage) {
+    public Organization(List<LocalDate> periods, String orgName , String homePage) {
         this.periods = periods;
         this.orgName = orgName;
         this.homePage = homePage;
@@ -27,5 +23,12 @@ public class Organization {
 
     public String getOrgName() {
         return orgName;
+    }
+
+    @Override
+    public String toString() {
+        return  "HomePage: " + homePage + "\n" +
+                "Organization Name: " + orgName + "\n" +
+                "Period: " + periods.getFirst()  + " - "+ periods.getLast();
     }
 }
