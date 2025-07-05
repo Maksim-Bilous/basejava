@@ -11,11 +11,9 @@ public class ResumeTestData {
     public static void main(String[] args) {
         Resume resume1 = new Resume("Grigory Kislin");
 
-        List<LocalDate> periods1 = new ArrayList<>();
-        periods1.add(LocalDate.of(2020, 12, 12));
-        periods1.add(LocalDate.of(2025, 2, 2));
-
-
+        List<Period> periods1 = new ArrayList<>();
+        periods1.add(new Period(LocalDate.of(2020, 2,12), LocalDate.of(2022, 3, 10), "Автор Проекта" , "Создание, организация и проведение Java онлайн проектов и стажировок."));
+        periods1.add(new Period(LocalDate.of(2022, 1,13), LocalDate.of(2023, 4, 16), "Test", "Test"));
         List<String> achievements = new ArrayList<>();
         achievements.add("Организация команды и успешная реализация Java проектов для сторонних заказчиков: приложения автопарк на стеке Spring Cloud/микросервисы, система мониторинга показателей спортсменов на Spring Boot, участие в проекте МЭШ");
         achievements.add("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", \"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов. Более 3500 выпускников.");
@@ -30,14 +28,10 @@ public class ResumeTestData {
         resume1.setSections(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
         resume1.setSections(SectionType.ACHIEVEMENT, new ListSection(achievements));
         resume1.setSections(SectionType.QUALIFICATIONS, new ListSection(qualifications));
-
-        resume1.setSections(SectionType.EXPERIENCE, new Organization(periods1, "Java Online Projects", "https://javaops.ru/"));
+        resume1.setSections(SectionType.EXPERIENCE, new Organization(periods1, "Java Online Projects" , "https://javaops.ru/"));
 
         System.out.println(SectionType.OBJECTIVE.getTitle() + "\n" + resume1.getSection(SectionType.OBJECTIVE) + "\n");
         System.out.println(SectionType.PERSONAL.getTitle() + "\n" + resume1.getSection(SectionType.PERSONAL) + "\n");
-
-
-
 
         System.out.println(SectionType.ACHIEVEMENT.getTitle());
         System.out.println(resume1.getSection(SectionType.ACHIEVEMENT) + "\n");
@@ -46,7 +40,7 @@ public class ResumeTestData {
         System.out.println(resume1.getSection(SectionType.QUALIFICATIONS)  + "\n");
 
         System.out.println(SectionType.EXPERIENCE.getTitle());
-        System.out.println(resume1.getSection(SectionType.EXPERIENCE));
+        System.out.println(resume1.getSection(SectionType.EXPERIENCE) + "\n");
 
 
     }
