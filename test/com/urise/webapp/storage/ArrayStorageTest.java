@@ -1,6 +1,5 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.model.Resume;
 import org.junit.Test;
 
 public class ArrayStorageTest extends AbstractStorageTest {
@@ -15,13 +14,13 @@ public class ArrayStorageTest extends AbstractStorageTest {
 
 
     @Test
-    public void insert() throws Exception {
-        storage.save(new Resume(UUID_4));
+    public void Save() throws Exception {
+        storage.save(r4);
     }
 
     @Test
-    public void remove() throws Exception {
-        storage.delete(UUID_4);
+    public void Delete() throws Exception {
+        storage.delete(r1.getUuid());
     }
 
 }

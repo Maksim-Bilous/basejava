@@ -1,5 +1,6 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.ResumeTestData;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
@@ -25,7 +26,7 @@ public abstract class AbstractStorageTest {
     protected static final Resume r4;
 
     static {
-        r1 = new Resume(UUID_1);
+        r1 = ResumeTestData.filledResume(UUID_1, "Grigoriy Kislin");
         r2 = new Resume(UUID_2);
         r3 = new Resume(UUID_3);
         r4 = new Resume(UUID_4);
@@ -81,7 +82,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAll() throws Exception {
+    public void getAllSorted() throws Exception {
         Resume[] expected = new Resume[]{r1, r2, r3};
         Assert.assertArrayEquals(expected, storage.getAllSorted().toArray());
     }
