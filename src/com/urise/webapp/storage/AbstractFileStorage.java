@@ -5,11 +5,14 @@ import com.urise.webapp.model.Resume;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public abstract class AbstractFileStorage extends AbstractStorage<File>{
+
     private final File directory;
+
     protected AbstractFileStorage(File directory){
         Objects.requireNonNull(directory, "directory must not be null");
         if(!directory.isDirectory()) {
@@ -23,7 +26,16 @@ public abstract class AbstractFileStorage extends AbstractStorage<File>{
 
     @Override
     protected List<Resume> getALL() {
-        return List.of();
+        File[] allFiles = directory.listFiles();
+        List<Resume> resumes = new ArrayList<>();
+        for (File file : allFiles) {
+            try {
+                resumes.add(doRead(file));
+            } catch (IOException e) {
+                throw new StorageException("IO error" , file.getName(), e);
+            }
+        }
+        return resumes;
     }
 
     @Override
@@ -38,7 +50,11 @@ public abstract class AbstractFileStorage extends AbstractStorage<File>{
 
     @Override
     protected void doDelete(File file) {
-        file.delete();
+        try {
+           file.delete();
+        } catch (Exception e) {
+            throw new StorageException("IO Error" , file.getName(), e);
+        }
     }
 
     @Override
@@ -73,9 +89,10 @@ public abstract class AbstractFileStorage extends AbstractStorage<File>{
     @Override
     public void clear() {
         File[] files = directory.listFiles();
+        Objects.requireNonNull(files);
         for (File file : files) {
             if (file.isFile()) {
-                file.delete();
+                doDelete(file);
             }
         }
     }
@@ -84,6 +101,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File>{
     public int size() {
         int countFile = 0;
         File[] files = directory.listFiles();
+        Objects.requireNonNull(files);
         for (File file : files){
             if (file.isFile()){
                 countFile++;
