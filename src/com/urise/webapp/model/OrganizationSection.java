@@ -3,6 +3,9 @@ package com.urise.webapp.model;
 import java.util.List;
 
 public class OrganizationSection extends Section  {
+
+    private static final long serialVersionUID =  1L;
+
     private final List<Organization> organizations;
 
     public OrganizationSection(List<Organization> organizations) {

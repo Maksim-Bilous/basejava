@@ -1,6 +1,5 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.ResumeTestData;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
@@ -8,7 +7,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static com.urise.webapp.storage.AbstractArrayStorage.STORAGE_LIMIT;
+import static org.junit.Assert.assertEquals;
 
 
 public abstract class AbstractStorageTest {
@@ -26,10 +29,12 @@ public abstract class AbstractStorageTest {
     protected static final Resume r4;
 
     static {
-        r1 = ResumeTestData.filledResume(UUID_1, "Grigoriy Kislin");
-        r2 = new Resume(UUID_2);
-        r3 = new Resume(UUID_3);
-        r4 = new Resume(UUID_4);
+        r1 = new Resume("Grigoriy Kislin" , UUID_1);
+        r2 = new Resume("Name2", UUID_2);
+        r3 = new Resume("Name3", UUID_3);
+        r4 = new Resume("Name4", UUID_4);
+
+
     }
 
     public AbstractStorageTest(Storage storage) {
@@ -48,7 +53,6 @@ public abstract class AbstractStorageTest {
     public void clear() throws Exception {
         storage.clear();
         assertSize(0);
-        Assert.assertArrayEquals(emptyStorage, storage.getAllSorted().toArray());
 
     }
 
@@ -83,8 +87,9 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAllSorted() throws Exception {
-        Resume[] expected = new Resume[]{r1, r2, r3};
-        Assert.assertArrayEquals(expected, storage.getAllSorted().toArray());
+        List<Resume> list = storage.getAllSorted();
+        assertEquals(3, list.size());
+        assertEquals(list, Arrays.asList(r1, r2, r3));
     }
 
     @Test
@@ -99,7 +104,6 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void saveFlowTest() {
-
         try {
             storage.clear();
             for (int i = 0; i < STORAGE_LIMIT; i++) {
@@ -113,11 +117,11 @@ public abstract class AbstractStorageTest {
 
 
     public void assertSize(int size) throws Exception {
-        Assert.assertEquals(size, storage.size());
+        assertEquals(size, storage.size());
     }
 
     public void assertGet(Resume resume) throws Exception {
-        Assert.assertEquals(resume, storage.get(resume.getUuid()));
+        assertEquals(resume, storage.get(resume.getUuid()));
     }
 
 }

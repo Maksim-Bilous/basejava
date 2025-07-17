@@ -1,6 +1,8 @@
 package com.urise.webapp.model;
 
 public class TextSection extends Section {
+    private static final long serialVersionUID =  1L;
+
     public  String text;
 
     public TextSection(String s) {

@@ -3,6 +3,7 @@ package com.urise.webapp.model;
 import java.util.List;
 
 public class Organization extends Section {
+    private static final long serialVersionUID =  1L;
     private final List<Period> periods;
     private final String homePage;
     private final String orgName;
