@@ -3,17 +3,23 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public abstract class AbstractPathStorage extends AbstractStorage<Path> {
 
     private final Path directory;
+
+    protected abstract void doWrite(Resume r, OutputStream os) throws IOException;
+
+    protected abstract Resume doRead(InputStream is) throws IOException;
 
     protected AbstractPathStorage(String dir) {
         directory = Paths.get(dir);
@@ -24,50 +30,21 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     }
 
     @Override
-    protected List<Resume> getALL() {
-        List<Resume> resumeList = new ArrayList<>();
-        return null;
-    }
-
-    @Override
-    protected void doSave(Resume r, Path path) {
+    public void clear() {
         try {
-            doWrite(r, (OutputStream) path);
+            Files.list(directory).forEach(this::doDelete);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new StorageException("Path delete error", null);
         }
     }
 
     @Override
-    protected void doDelete(Path path) {
-        try {
-            Files.delete(path);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    public int size() {
+        String[] list = directory.toFile().list();
+        if (list == null) {
+            throw new StorageException("Directory read error", null);
         }
-    }
-
-    @Override
-    protected void doUpdate(Resume r, Path path) {
-        try {
-            doWrite(r, new BufferedOutputStream((OutputStream) path));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    protected Resume doGet(Path path) {
-        try {
-          return doRead((InputStream) path);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public boolean isExisting(Path path) {
-        return Files.exists(path);
+        return list.length;
     }
 
     @Override
@@ -76,20 +53,53 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     }
 
     @Override
-    public void clear() {
-        try {
-            Files.list(directory).forEach(this::doDelete);
+    protected void doUpdate(Resume r, Path Path) {
+        try{
+            doWrite(r, (OutputStream) Path);
+            System.out.println("Path Updated");
         } catch (IOException e) {
-            throw new StorageException("Path delete error" , null);
+            throw new StorageException("Error update Resume" , null, e);
         }
     }
 
     @Override
-    public int size() {
-        return 0;
+    public boolean isExisting(Path Path) {
+        return Files.exists(directory);
     }
 
-    protected abstract void doWrite(Resume r, OutputStream path) throws IOException;
+    @Override
+    protected void doSave(Resume r, Path Path) {
+        try {
+            doWrite(r, (OutputStream) Path);
+        } catch (IOException e) {
+            throw new StorageException("Error save R ", null, e);
+        }
+    }
 
-    protected abstract Resume doRead(InputStream path) throws IOException;
+    @Override
+    protected Resume doGet(Path Path) {
+        try {
+            return doRead((InputStream) Path);
+        } catch (IOException e) {
+            throw new StorageException("Error get R", null, e);
+        }
+    }
+
+    @Override
+    protected void doDelete(Path Path) {
+        try {
+            Files.delete(Path);
+        } catch (IOException e) {
+            throw new StorageException("Error delete R ", null, e);
+        }
+    }
+
+    protected List<Resume> getALL() {
+        try(Stream<Path> walk = Files.list(Paths.get(String.valueOf(directory)))) {
+            return (List<Resume>) walk;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
