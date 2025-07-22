@@ -13,17 +13,16 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-public abstract class AbstractPathStorage extends AbstractStorage<Path> {
+public class PathStorage extends AbstractStorage<Path> {
 
     private final Path directory;
 
-    protected abstract void doWrite(Resume r, OutputStream os) throws IOException;
+    SerializeStrategy streamSerializer;
 
-    protected abstract Resume doRead(InputStream is) throws IOException;
-
-    protected AbstractPathStorage(String dir) {
+    protected PathStorage(String dir, SerializeStrategy streamSerializer) {
         directory = Paths.get(dir);
         Objects.requireNonNull(directory, "directory must not be null");
+        this.streamSerializer=streamSerializer;
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(dir + "is not directory or is not writable");
         }
@@ -55,7 +54,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected void doUpdate(Resume r, Path Path) {
         try{
-            doWrite(r, (OutputStream) Path);
+            streamSerializer.doWrite(r, (OutputStream) Path);
             System.out.println("Path Updated");
         } catch (IOException e) {
             throw new StorageException("Error update Resume" , null, e);
@@ -70,7 +69,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected void doSave(Resume r, Path Path) {
         try {
-            doWrite(r, (OutputStream) Path);
+            streamSerializer.doWrite(r, (OutputStream) Path);
         } catch (IOException e) {
             throw new StorageException("Error save R ", null, e);
         }
@@ -79,7 +78,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected Resume doGet(Path Path) {
         try {
-            return doRead((InputStream) Path);
+            return streamSerializer.doRead((InputStream) Path);
         } catch (IOException e) {
             throw new StorageException("Error get R", null, e);
         }

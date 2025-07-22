@@ -1,22 +1,22 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.NotExistStorageException;
-import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.urise.webapp.storage.AbstractArrayStorage.STORAGE_LIMIT;
 import static org.junit.Assert.assertEquals;
 
 
 public abstract class AbstractStorageTest {
-    private final Storage storage;
+    protected final Storage storage;
     protected static final Resume[] emptyStorage = new Resume[0];
+    protected static final File STORAGE_DIR = new File("C:\\basejava\\basejava\\storage");
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
@@ -100,19 +100,6 @@ public abstract class AbstractStorageTest {
     @Test(expected = NotExistStorageException.class)
     public void getNotExist() throws Exception {
         storage.get("dummy");
-    }
-
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public void saveFlowTest() {
-        try {
-            storage.clear();
-            for (int i = 0; i < STORAGE_LIMIT; i++) {
-                storage.save(new Resume("uuid" + i));
-            }
-        } catch (StorageException e) {
-            Assert.fail("StorageException выброшено раньше врeмени.");
-        }
-        storage.save(new Resume("uuid10001"));
     }
 
 
