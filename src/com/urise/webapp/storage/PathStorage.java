@@ -2,9 +2,10 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
+import com.urise.webapp.storage.serialize.ObjectStreamSerializer;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,12 +18,12 @@ public class PathStorage extends AbstractStorage<Path> {
 
     private final Path directory;
 
-    SerializeStrategy streamSerializer;
+    private final ObjectStreamSerializer streamSerializer;
 
-    protected PathStorage(String dir, SerializeStrategy streamSerializer) {
+    protected PathStorage(String dir, ObjectStreamSerializer streamSerializer) {
         directory = Paths.get(dir);
         Objects.requireNonNull(directory, "directory must not be null");
-        this.streamSerializer=streamSerializer;
+        this.streamSerializer = streamSerializer;
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(dir + "is not directory or is not writable");
         }
@@ -48,37 +49,36 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     protected Path getSearchKey(String uuid) {
-        return Path.of(uuid);
+        return directory.resolve(uuid);
     }
 
     @Override
     protected void doUpdate(Resume r, Path Path) {
-        try{
+        try {
             streamSerializer.doWrite(r, (OutputStream) Path);
-            System.out.println("Path Updated");
         } catch (IOException e) {
-            throw new StorageException("Error update Resume" , null, e);
+            throw new StorageException("Error update Resume", null, e);
         }
     }
 
     @Override
     public boolean isExisting(Path Path) {
-        return Files.exists(directory);
+        return Files.exists(Path);
     }
 
     @Override
     protected void doSave(Resume r, Path Path) {
         try {
-            streamSerializer.doWrite(r, (OutputStream) Path);
+            Files.createFile(Path);
         } catch (IOException e) {
-            throw new StorageException("Error save R ", null, e);
+            throw new StorageException("Error save R", null, e);
         }
     }
 
     @Override
     protected Resume doGet(Path Path) {
         try {
-            return streamSerializer.doRead((InputStream) Path);
+            return streamSerializer.doRead(new BufferedInputStream(Files.newInputStream(Path)));
         } catch (IOException e) {
             throw new StorageException("Error get R", null, e);
         }
@@ -94,10 +94,10 @@ public class PathStorage extends AbstractStorage<Path> {
     }
 
     protected List<Resume> getALL() {
-        try(Stream<Path> walk = Files.list(Paths.get(String.valueOf(directory)))) {
-            return (List<Resume>) walk;
+        try (Stream<Path> walk = Files.list(Paths.get(String.valueOf(directory)))) {
+            return walk.map(this::doGet).toList();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new StorageException("Error getting all resumes", null, e);
         }
     }
 

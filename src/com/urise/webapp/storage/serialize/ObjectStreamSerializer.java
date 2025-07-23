@@ -1,4 +1,4 @@
-package com.urise.webapp.storage;
+package com.urise.webapp.storage.serialize;
 
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
@@ -20,7 +20,6 @@ public class ObjectStreamSerializer implements SerializeStrategy {
     public Resume doRead(InputStream is) throws IOException {
         try(ObjectInputStream ois = new ObjectInputStream(is)) {
             return (Resume) ois.readObject();
-
         } catch (ClassNotFoundException e) {
             throw new StorageException("Error read resume", null, e);
         }

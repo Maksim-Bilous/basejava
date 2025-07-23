@@ -8,8 +8,8 @@ import org.junit.Test;
 import static com.urise.webapp.storage.AbstractArrayStorage.STORAGE_LIMIT;
 
 public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
-    protected AbstractArrayStorageTest(Storage storage) {
-        super(storage);
+    public AbstractArrayStorageTest() {
+        super(new ArrayStorage());
     }
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)

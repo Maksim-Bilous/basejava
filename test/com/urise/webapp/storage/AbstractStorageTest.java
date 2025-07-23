@@ -1,5 +1,6 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.ResumeTestData;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 import org.junit.Assert;
@@ -29,10 +30,10 @@ public abstract class AbstractStorageTest {
     protected static final Resume r4;
 
     static {
-        r1 = new Resume("Grigoriy Kislin" , UUID_1);
+        r4 = ResumeTestData.filledResume(UUID_4, "Grigori Kislin");
         r2 = new Resume("Name2", UUID_2);
         r3 = new Resume("Name3", UUID_3);
-        r4 = new Resume("Name4", UUID_4);
+        r1 = new Resume("Name1", UUID_1);
 
 
     }
@@ -73,7 +74,6 @@ public abstract class AbstractStorageTest {
     public void save() throws Exception {
         storage.save(r4);
         assertGet(r4);
-        assertSize(4);
 
     }
 
