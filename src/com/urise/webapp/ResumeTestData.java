@@ -50,9 +50,6 @@ public class ResumeTestData {
         setObjective(r1);
         setPersonal(r1);
         setAchievement(r1);
-        setQualifications(r1);
-        setExperience(r1);
-
         return r1;
     }
 
