@@ -5,9 +5,11 @@ import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.serialize.ObjectStreamSerializer;
 
 import java.io.*;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FileStorage extends AbstractStorage<File> {
 
@@ -30,12 +32,7 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     protected List<Resume> getALL() {
-        File[] allFiles = directory.listFiles();
-        List<Resume> resumes = new ArrayList<>();
-        for (File file : allFiles) {
-            resumes.add(doGet(file));
-        }
-        return resumes;
+        return getFilesList().map(this::doGet).collect(Collectors.toList());
     }
 
     @Override
@@ -88,19 +85,15 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     public void clear() {
-        File[] files = directory.listFiles();
-        Objects.requireNonNull(files);
-        for (File file : files) {
-            if (file.isFile()) {
-                doDelete(file);
-            }
-        }
+        getFilesList().forEach(this::doDelete);
     }
 
     @Override
     public int size() {
-        File[] files = directory.listFiles();
-        Objects.requireNonNull(files);
-        return files.length;
+        return (int) getFilesList().count();
+    }
+
+    private Stream<File> getFilesList() {
+        return Arrays.stream(Objects.requireNonNull(directory.listFiles()));
     }
 }

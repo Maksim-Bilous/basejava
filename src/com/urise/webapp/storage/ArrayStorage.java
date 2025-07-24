@@ -2,6 +2,7 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected List<Resume> getALL() {
-        return List.of(storage);
+        return new ArrayList<>(List.of(storage));
     }
 
     @Override
