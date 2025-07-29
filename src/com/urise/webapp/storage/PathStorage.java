@@ -61,7 +61,7 @@ public class PathStorage extends AbstractStorage<Path> {
     protected void doSave(Resume r, Path Path) {
         try {
             Files.createFile(Path);
-            streamSerializer.doWrite(r, new BufferedOutputStream(Files.newOutputStream(Path)));
+            doUpdate(r, Path);
         } catch (IOException e) {
             throw new StorageException("Error save R", null, e);
         }

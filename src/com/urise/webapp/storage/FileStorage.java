@@ -39,7 +39,7 @@ public class FileStorage extends AbstractStorage<File> {
     protected void doSave(Resume r, File file) {
         try {
             file.createNewFile();
-            streamSerialize.doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
+            doUpdate(r, file);
         } catch (IOException e) {
             throw new StorageException("IO Error1", file.getName(), e);
         }
@@ -58,7 +58,6 @@ public class FileStorage extends AbstractStorage<File> {
     protected void doUpdate(Resume r, File file) {
         try {
             streamSerialize.doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
-            System.out.println("File Updated");
         } catch (IOException e) {
             throw new StorageException("IO Error3", file.getName(), e);
         }
