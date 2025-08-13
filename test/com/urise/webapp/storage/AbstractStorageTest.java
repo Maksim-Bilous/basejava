@@ -1,8 +1,7 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.ResumeTestData;
 import com.urise.webapp.exception.NotExistStorageException;
-import com.urise.webapp.model.Resume;
+import com.urise.webapp.model.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,17 +21,23 @@ public abstract class AbstractStorageTest {
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
 
-    protected static final Resume r1;
-    protected static final Resume r2;
-    protected static final Resume r3;
-    protected static final Resume r4;
+    protected static final Resume R1;
+    protected static final Resume R2;
+    protected static final Resume R3;
+    protected static final Resume R4;
 
     static {
-        r4 = ResumeTestData.filledResume(UUID_4, "Grigori Kislin");
-        r2 = new Resume("Name2", UUID_2);
-        r3 = new Resume("Name3", UUID_3);
-        r1 = new Resume("Name1", UUID_1);
+        R1 = new Resume(UUID_1, "Grigory Kislin");
+        R2 = new Resume(UUID_2, "Maksim Bilous");
+        R3 = new Resume(UUID_3, "Violetta Bilous");
+        R4 = new Resume(UUID_4, "Name1");
 
+        R1.setContacts(ContactType.MAIL, "mail1@ya.ru");
+        R1.setContacts(ContactType.PHONE, "11111");
+        R1.setSections(SectionType.OBJECTIVE, new TextSection("Objective1"));
+        R1.setSections(SectionType.PERSONAL, new TextSection("Personal data"));
+        R1.setSections(SectionType.ACHIEVEMENT, new ListSection("Achivment11", "Achivment12", "Achivment13"));
+        R1.setSections(SectionType.QUALIFICATIONS, new ListSection("Java", "SQL", "JavaScript"));
 
     }
 
@@ -43,9 +48,9 @@ public abstract class AbstractStorageTest {
     @Before
     public void setUp() throws Exception {
         storage.clear();
-        storage.save(r1);
-        storage.save(r2);
-        storage.save(r3);
+        storage.save(R1);
+        storage.save(R2);
+        storage.save(R3);
     }
 
     @Test
@@ -57,22 +62,23 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() throws Exception {
-        Resume newResume = new Resume("New Name", UUID_3 );
-        storage.update(newResume);
-        assertEquals(newResume, storage.get(UUID_3));
+        Resume resume3 = new Resume(UUID_3, "new Name" );
+        storage.update(resume3);
+        assertEquals(resume3, storage.get(UUID_3));
     }
 
     @Test
     public void get() throws Exception {
-        assertGet(r1);
-        assertGet(r2);
-        assertGet(r3);
+        assertEquals(R1, storage.get(R1.getUuid()));
+        assertGet(R2);
+        assertGet(R3);
     }
 
     @Test
     public void save() throws Exception {
-        storage.save(r4);
-        assertGet(r4);
+        storage.save(R4);
+        assertSize(4);
+        assertGet(R4);
 
     }
 
@@ -101,12 +107,12 @@ public abstract class AbstractStorageTest {
     }
 
 
-    public void assertSize(int size) throws Exception {
+    private void assertSize(int size) {
         assertEquals(size, storage.size());
     }
 
-    public void assertGet(Resume resume) throws Exception {
-        assertEquals(resume, storage.get(resume.getUuid()));
+    private void assertGet(Resume r) {
+        assertEquals(r, storage.get(r.getUuid()));
     }
 
 }

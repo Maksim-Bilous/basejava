@@ -8,15 +8,15 @@ public class MainTestArrayStorage {
     static final Storage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
-        Resume R1 = new Resume("Maksim Bilous");
-        Resume R2 = new Resume("Violetta Bilous");
-        Resume R3 = new Resume("Maria Aleksevna");
+        Resume R1 = new Resume("UUID1","Maksim Bilous");
+        Resume R2 = new Resume("UUID2","Violetta Bilous");
+        Resume R3 = new Resume("UUID3","Maria Aleksevna");
 
         ARRAY_STORAGE.save(R1);
         ARRAY_STORAGE.save(R2);
         ARRAY_STORAGE.save(R3);
 
-        System.out.println("Get r1: " + ARRAY_STORAGE.get(R1.getUuid()));
+        System.out.println("Get r1: " + ARRAY_STORAGE.get(R2.getUuid()));
         System.out.println("Size: " + ARRAY_STORAGE.size());
 
         printAll();

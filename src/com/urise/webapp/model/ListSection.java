@@ -1,20 +1,34 @@
 package com.urise.webapp.model;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class ListSection extends Section {
-    private static final long serialVersionUID =  1L;
+    private static final long serialVersionUID = 1L;
 
-    private final List<String> items;
+    private List<String> items;
+
+    public ListSection() {
+    }
+
+    public ListSection(String... items) {
+        this(Arrays.asList(items));
+    }
 
     public ListSection(List<String> items) {
-        Objects.requireNonNull("Not null!");
+        Objects.requireNonNull(items, "items must not be null");
         this.items = items;
     }
 
     public List<String> getItems() {
         return items;
+    }
+
+    @Override
+    public String toString() {
+        System.out.print(" * ");
+        return String.join("\n * " , items);
     }
 
     @Override
@@ -25,16 +39,11 @@ public class ListSection extends Section {
         ListSection that = (ListSection) o;
 
         return items.equals(that.items);
+
     }
 
     @Override
     public int hashCode() {
         return items.hashCode();
-    }
-
-    @Override
-    public String toString () {
-        System.out.print(" * ");
-        return String.join("\n * " , items);
     }
 }

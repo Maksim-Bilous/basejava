@@ -13,7 +13,7 @@ public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
     }
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public void saveFlowTest() {
+    public void saveFlowTest() throws Exception{
         try {
             storage.clear();
             for (int i = 0; i < STORAGE_LIMIT; i++) {

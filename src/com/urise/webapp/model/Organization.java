@@ -4,15 +4,22 @@ import java.util.List;
 
 public class Organization extends Section {
     private static final long serialVersionUID =  1L;
-    private final List<Period> periods;
-    private final String homePage;
-    private final String orgName;
+    private  List<Period> periods;
+    private  String homePage;
+    private  String orgName;
 
 
     public Organization(List<Period> periods, String orgName , String homePage) {
         this.periods = periods;
         this.orgName = orgName;
         this.homePage = homePage;
+    }
+
+    public Organization() {
+    }
+
+    public List<Period> getPeriods(){
+        return periods;
     }
 
     public String getHomePage() {

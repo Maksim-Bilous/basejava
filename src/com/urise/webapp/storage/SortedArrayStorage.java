@@ -4,6 +4,7 @@ import com.urise.webapp.model.Resume;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import static java.lang.System.arraycopy;
@@ -12,6 +13,8 @@ import static java.util.Arrays.binarySearch;
 public class SortedArrayStorage extends AbstractArrayStorage {
 
 
+    private static final Comparator<Resume> RESUME_COMPARATOR = (o1, o2) -> o1.getUuid().compareTo(o2.getUuid());
+
     @Override
     protected List<Resume> getALL() {
         return new ArrayList<>(List.of(Arrays.copyOf(storage, resumeQuantity)));
@@ -19,17 +22,11 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void doSave(Resume r, Object searchKey) {
-        insert(r, (Integer) searchKey);
-    }
-
-
-    public void insert(Resume r, int index) {
-        int insertIdx = -index - 1;
+        int insertIdx = -(Integer) searchKey - 1;
         System.arraycopy(storage, insertIdx, storage, insertIdx + 1, resumeQuantity - insertIdx);
         storage[insertIdx] = r;
         resumeQuantity++;
     }
-
 
     @Override
     protected void doDelete(Object searchKey) {
@@ -57,11 +54,10 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         return searchKey != null && (Integer) searchKey >= 0;
     }
 
-
     @Override
     protected Object getSearchKey(String uuid) {
-        Resume searchKey = new Resume("", uuid);
-        return binarySearch(storage, 0, resumeQuantity, searchKey);
+        Resume searchKey = new Resume(uuid, "dummy");
+        return binarySearch(storage, 0, resumeQuantity, searchKey, RESUME_COMPARATOR);
     }
 }
 

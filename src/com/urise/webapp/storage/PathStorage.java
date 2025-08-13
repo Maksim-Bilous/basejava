@@ -2,9 +2,11 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
-import com.urise.webapp.storage.serialize.ObjectStreamSerializer;
+import com.urise.webapp.storage.serializer.StreamSerializer;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,9 +19,9 @@ public class PathStorage extends AbstractStorage<Path> {
 
     private final Path directory;
 
-    private final ObjectStreamSerializer streamSerializer;
+    private final StreamSerializer streamSerializer;
 
-    protected PathStorage(String dir, ObjectStreamSerializer streamSerializer) {
+    protected PathStorage(String dir, StreamSerializer streamSerializer) {
         directory = Paths.get(dir);
         Objects.requireNonNull(directory, "directory must not be null");
         this.streamSerializer = streamSerializer;
@@ -44,42 +46,42 @@ public class PathStorage extends AbstractStorage<Path> {
     }
 
     @Override
-    protected void doUpdate(Resume r, Path Path) {
+    protected void doUpdate(Resume r, Path path) {
         try {
-            streamSerializer.doWrite(r, new BufferedOutputStream(Files.newOutputStream(Path)));
+            streamSerializer.doWrite(r, new BufferedOutputStream(Files.newOutputStream(path)));
         } catch (IOException e) {
             throw new StorageException("Error update Resume", null, e);
         }
     }
 
     @Override
-    public boolean isExisting(Path Path) {
-        return Files.isRegularFile(Path);
+    public boolean isExisting(Path path) {
+        return Files.isRegularFile(path);
     }
 
     @Override
-    protected void doSave(Resume r, Path Path) {
+    protected void doSave(Resume r, Path path) {
         try {
-            Files.createFile(Path);
-            doUpdate(r, Path);
+            Files.createFile(path);
+            doUpdate(r, path);
         } catch (IOException e) {
             throw new StorageException("Error save R", null, e);
         }
     }
 
     @Override
-    protected Resume doGet(Path Path) {
+    protected Resume doGet(Path path) {
         try {
-            return streamSerializer.doRead(new BufferedInputStream(Files.newInputStream(Path)));
+            return streamSerializer.doRead(new BufferedInputStream(Files.newInputStream(path)));
         } catch (IOException e) {
             throw new StorageException("Error get R", null, e);
         }
     }
 
     @Override
-    protected void doDelete(Path Path) {
+    protected void doDelete(Path path) {
         try {
-            Files.delete(Path);
+            Files.delete(path);
         } catch (IOException e) {
             throw new StorageException("Error delete R ", null, e);
         }
