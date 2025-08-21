@@ -13,7 +13,7 @@ public class XmlStreamSerializer implements StreamSerializer {
     public XmlStreamSerializer() {
         xmlParser = new XmlParser(
                 Resume.class, Organization.class,
-                OrganizationSection.class, TextSection.class, ListSection.class, OrganizationSection.class);
+                OrganizationSection.class, TextSection.class, ListSection.class, OrganizationSection.class, Period.class);
     }
 
     @Override

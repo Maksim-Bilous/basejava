@@ -15,8 +15,8 @@ public class Resume implements Comparable<Resume>, Serializable {
     private static final long serialVersionUID = 1L;
 
     // Unique identifier
-    private String uuid;
-    private String fullName;
+    private final String uuid;
+    private final String fullName;
 
     private final Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
     private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
@@ -67,7 +67,8 @@ public class Resume implements Comparable<Resume>, Serializable {
 
     @Override
     public String toString() {
-        return uuid;
+        return uuid + '(' + fullName + ')' +
+                "Sections" + getSections();
     }
 
     @Override
@@ -87,10 +88,8 @@ public class Resume implements Comparable<Resume>, Serializable {
     }
 
     @Override
-    public int compareTo(Resume a) {
-        return this.uuid.compareTo(a.uuid);
-    }
-
-    public Resume() {
+    public int compareTo(Resume o) {
+        int cmp = fullName.compareTo(o.fullName);
+        return cmp != 0 ? cmp : uuid.compareTo(o.uuid);
     }
 }

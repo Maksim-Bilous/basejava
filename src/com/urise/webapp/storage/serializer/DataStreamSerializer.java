@@ -43,6 +43,8 @@ public class DataStreamSerializer implements StreamSerializer {
                             dos.writeUTF(org.getPeriods().toString());
                         });
                         break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + type);
                 }
             });
 

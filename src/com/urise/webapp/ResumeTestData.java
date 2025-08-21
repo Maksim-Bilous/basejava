@@ -41,11 +41,16 @@ public class ResumeTestData {
         setObjective(r1);
         setPersonal(r1);
         setAchievement(r1);
+        setExperience(r1);
+        setQualifications(r1);
+        setEducation(r1);
         return r1;
     }
 
     private static void setEducation(Resume r1) {
-
+        List<Period> periods1 = new ArrayList<>();
+        periods1.add(new Period(LocalDate.of(2022, 3,1), LocalDate.of(2024, 4, 8), "Автор Проекта" , "Создание, организация и проведение Java онлайн проектов и стажировок."));
+        r1.setSections(SectionType.EDUCATION, new Organization(periods1, "BaseJava" , "https://javaops.ru/"));
     }
 
     private static void setExperience(Resume r1) {
@@ -71,4 +76,5 @@ public class ResumeTestData {
     private static void setObjective(Resume r1) {
         r1.setSections(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
     }
+
 }
