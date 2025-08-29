@@ -64,12 +64,10 @@ public class MainConcurrency {
 
         //DeadLock
         DeadLock deadLock = new DeadLock();
-
-        Thread t1 = new Thread(deadLock::deadLock1, "Thread-1");
-        Thread t2 = new Thread(deadLock::deadLock2, "Thread-2");
-
-        t1.start();
-        t2.start();
+        Object lock1 = new Thread("Thread1");
+        Object lock2 = new Thread("Thread2");
+        deadLock.deadLockFinal(lock1 , lock2);
+        deadLock.deadLockFinal(lock2 , lock1);
     }
 
     private synchronized void inc() {
