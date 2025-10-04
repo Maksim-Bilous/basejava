@@ -1,13 +1,12 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.Config;
 import com.urise.webapp.exception.NotExistStorageException;
-import com.urise.webapp.model.*;
+import com.urise.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -16,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 public abstract class AbstractStorageTest {
     protected final Storage storage;
 
-    protected static final File STORAGE_DIR = new File("C:\\basejava\\basejava\\storage");
+    protected static final File STORAGE_DIR = Config.get().getStorageDir();
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
@@ -35,7 +34,7 @@ public abstract class AbstractStorageTest {
         R4 = new Resume(UUID_4, "New name");
 
 
-        List<Period> periods1 = new ArrayList<>();
+        /*List<Period> periods1 = new ArrayList<>();
         periods1.add(new Period(LocalDate.of(2022, 3,1), LocalDate.of(2024, 4, 8), "Автор Проекта" , "Создание, организация и проведение Java онлайн проектов и стажировок."));
         R4.setSections(SectionType.EDUCATION, new Organization(periods1, "BaseJava" , "https://javaops.ru/"));
         R4.setSections(SectionType.OBJECTIVE, new TextSection("Objective1"));
@@ -43,7 +42,7 @@ public abstract class AbstractStorageTest {
         R4.setSections(SectionType.ACHIEVEMENT, new ListSection("Achivment11", "Achivment12", "Achivment13"));
         R4.setSections(SectionType.QUALIFICATIONS, new ListSection("Java", "SQL", "JavaScript"));
         R4.setContacts(ContactType.MAIL, "mail1@ya.ru");
-        R4.setContacts(ContactType.PHONE, "11111");
+        R4.setContacts(ContactType.PHONE, "11111");*/
     }
 
     public AbstractStorageTest(Storage storage) {
